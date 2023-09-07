@@ -14,6 +14,7 @@ class Activation(Layer):
     def backward(self, output_gradient, learning_rate):
         # dL/dxi = dL/dyi * dyi/dxi, dyi/dxi = activation_derivative(xi)
         # dL/dx = dL/dyi * activation_derivative(xi) for all i
+        # hadamard product since we just want to multiply the terms in the same positions
         return np.multiply(output_gradient, self.activation_derivative(self.input))
     
 class ReLU(Activation):
