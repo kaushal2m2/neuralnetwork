@@ -44,14 +44,14 @@ class Linear(Layer):
         input_gradient = self.weights.T @ output_gradient
 
         # we are using momentum [2], with coeff = 0.9, as an additional optimization
-        self.weights_momentum = 0.9 * self.weights_momentum - 0.1 * weights_gradient
-        self.biases_momentum = 0.9 * self.biases_momentum - 0.1 * output_gradient
+        self.weights_momentum = 0.9 * self.weights_momentum - learning_rate * weights_gradient
+        self.biases_momentum = 0.9 * self.biases_momentum - learning_rate * output_gradient
 
         # update weights by weight gradient, bias by output gradient
         # dL/dbj = dL/dyj * dyj/dbj = dL/dyj * 1 = dL/dyj
         # so the gradient for all the biases is just dL/dy, since they have the same dimensions
-        self.weights = self.weights + learning_rate * self.weights_momentum
-        self.biases = self.biases + learning_rate * self.biases_momentum
+        self.weights = self.weights + self.weights_momentum
+        self.biases = self.biases + self.biases_momentum
 
         #to pass to the previous layer as its output layer
         return input_gradient
