@@ -21,7 +21,7 @@ self.biases = np.zeros((neurons, 1))
 
 ### Momentum with Stochastic Gradient Descent
 
-> * *v<sub>t+1</sub> = µv<sub>t</sub> - ε∇f(⍬<sub>t</sub>) \n ⍬<sub>t+1</sub> = ⍬<sub>t</sub> + v<sub>t+1</sub>* *
+> * *v<sub>t+1</sub> = µv<sub>t</sub> - ε∇f(⍬<sub>t</sub>) <br/> ⍬<sub>t+1</sub> = ⍬<sub>t</sub> + v<sub>t+1</sub>* *
 
 Where v<sub>t</sub> is the weights gradient in the tth iteration, and µ is the momentum coefficient. 
 
