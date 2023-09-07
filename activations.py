@@ -11,9 +11,9 @@ class Activation(Layer):
         self.output = self.activation(self.input) #pass into activation function for output
         return self.output
     
-    def backward(self, output_gradient):
-        #dL/dxi = dL/dyi * dyi/dxi, dyi/dxi = activation_derivative(xi)
-        #dL/dx = dL/dyi * activation_derivative(xi) for all i
+    def backward(self, output_gradient, learning_rate):
+        # dL/dxi = dL/dyi * dyi/dxi, dyi/dxi = activation_derivative(xi)
+        # dL/dx = dL/dyi * activation_derivative(xi) for all i
         return np.multiply(output_gradient, self.activation_derivative(self.input))
     
 class ReLU(Activation):

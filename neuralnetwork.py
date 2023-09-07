@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 class NeuralNetwork:
     def __init__(self, layers):
@@ -14,15 +15,18 @@ class NeuralNetwork:
         # if batch_size is None, then use all the data
         if batch_size is None:
             batch_size = len(x_train)
-        
+        print(batch_size)
         for epoch in range(epochs):
             # get a random batch of data
-            batch_indices = np.random.Generator.integers(len(x_train), size = batch_size)
-            x_batch = x_train[batch_indices]
-            y_batch = y_train[batch_indices]
-
-            x_batch = np.reshape(x_batch, (-1, batch_size))
-            y_batch = np.reshape(y_batch, (-1, batch_size))
+            batch_indices = [i for i in range(len(x_train))]
+            random.shuffle(batch_indices)
+            idx = 0 if batch_size == len(x_train) else np.random.default_rng().integers(len(x_train)-batch_size)
+            batch_indices = batch_indices[idx:idx+batch_size]
+            x_batch = [x_train[i] for i in batch_indices]
+            y_batch = [y_train[i] for i in batch_indices]
+           
+            x_batch = np.reshape(x_batch, (batch_size, 2, 1))
+            y_batch = np.reshape(y_batch, (batch_size, 1, 1))
             
             # train on this batch
             error = 0
@@ -36,5 +40,6 @@ class NeuralNetwork:
                     loss_gradient = layer.backward(loss_gradient, learning_rate)
             
             # print progress
-            loss = loss_fn(y_batch, self.predict(x_batch))
-            print("Epoch %d/%d loss: %.3f" % (epoch, epochs, loss))
+            predictions = [self.predict(x) for x in x_batch]
+            loss = loss_fn(y_batch, predictions)
+            print("Epoch %d/%d loss: %.3f" % (epoch+1, epochs, loss))

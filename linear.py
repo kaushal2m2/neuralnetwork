@@ -1,18 +1,27 @@
 from layer import Layer
 import numpy as np
 
-class Linear(layer):
+class Linear(Layer):
     def __init__(self, input_size, neurons):
         # initialize weights and biases to random values
-        self.weights = np.random.randn(neurons, input_size)
-        self.biases = np.random.randn(neurons, 1)
+        # self.weights = np.random.randn(neurons, input_size)
+        # self.biases = np.random.randn(neurons, 1)
+
+        # this works, but isn't ideal, as it is likely that we end up with weights/biases such that 
+        # our model finds a bad local minimum
+        
+        # instead, implement He initialization for weights and biases, since we are using relu
+        # He initialization: initialize weights with mean 0 and variance sqrt(2/n), where n is the number of inputs
+        # biases = 0
+        self.weights = np.random.randn(neurons, input_size) * np.sqrt(2 / input_size)
+        self.biases = np.zeros((neurons, 1))
 
     def forward(self, input):
         # save input for backward pass
         self.input = input
 
         # Y = W * X + b, return it to be passed as the input for the next layer
-        self.output = np.dot(self.weights, input) + self.biases
+        self.output = np.dot(self.weights, self.input) + self.biases
         return self.output
     
     def backward(self, output_gradient, learning_rate):
@@ -31,12 +40,13 @@ class Linear(layer):
         # so dL/dxi = sum (dL/dyj * dyj/dxi) = sum (dL/dyj * wji)
         # this can be written as a matrix of wij * dL/dyj (note wij, so its transpose)
         input_gradient = np.dot(self.weights.T, output_gradient)
+        #print(self.weights.T.shape, output_gradient.shape, "b")
 
-        #update weights by weight gradient, bias by output gradient
+        # update weights by weight gradient, bias by output gradient
         # dL/dbj = dL/dyj * dyj/dbj = dL/dyj * 1 = dL/dyj
         # so the gradient for all the biases is just dL/dy, since they have the same dimensions
-        self.weights -= learning_rate * weights_gradient
-        self.biases -= learning_rate * output_gradient
+        self.weights = self.weights - learning_rate * weights_gradient
+        self.biases = self.biases - learning_rate * output_gradient
 
         #to pass to the previous layer as its output layer
         return input_gradient
