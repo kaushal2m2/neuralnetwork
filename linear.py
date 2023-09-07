@@ -10,9 +10,10 @@ class Linear(layer):
     def forward(self, input):
         # save input for backward pass
         self.input = input
-        
+
         # Y = W * X + b, return it to be passed as the input for the next layer
-        return np.dot(self.weights, input) + self.biases
+        self.output = np.dot(self.weights, input) + self.biases
+        return self.output
     
     def backward(self, output_gradient, learning_rate):
         # the output gradient is for our purposes dL/dy, we want to find the weights gradient
