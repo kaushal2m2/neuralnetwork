@@ -28,3 +28,16 @@ class Sigmoid(Activation):
         sigmoid = lambda x : 1 / (1 + np.exp(-x))
         sigmoid_prime = lambda x : sigmoid(x) * (1 - sigmoid(x))
         super().__init__(sigmoid, sigmoid_prime)
+
+class Softmax(Layer):
+    def __init__(self):
+        super().__init__()
+
+    def forward(self, input):
+        curr = np.exp(input)
+        self.output = curr / np.sum(curr)
+        return self.output
+    
+    def backward(self, output_gradient, learning_rate):
+        n = np.size(self.output)
+        return np.dot((np.identity(n) - self.output.T) * self.output, output_gradient)
