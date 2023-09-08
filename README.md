@@ -2,7 +2,7 @@
 
 ## About
 
-This repo is my implementation of a basic **feedforward neural network with stochastic gradient descent**, to help me learn the theory behind them. Additionally, I have implemented a convolutional layer to create a **convolutional neural network**. I consulted various research papers in order to learn and implement optimizations to make the neural net perform better. I've included comments in the code explaining where certain math comes from, and why it works. 
+This repo is my implementation of a basic **feedforward neural network with stochastic gradient descent** and a **convolutional neural network**, to help me learn the theory behind them. I consulted various research papers in order to learn and implement optimizations to make the neural net perform better. I've included comments in the code explaining where certain math comes from, and why it works. 
 
 ## Optimizations
 
