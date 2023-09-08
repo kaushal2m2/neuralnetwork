@@ -2,7 +2,7 @@
 
 ## About
 
-This repo is my implementation of a basic **feedforward neural network with stochastic gradient descent**, to help me learn the theory behind them. I consulted various research papers in order to learn and implement optimizations to make the neural net perform better. I've included comments in the code explaining where certain math comes from, and why it works. 
+This repo is my implementation of a basic **feedforward neural network with stochastic gradient descent**, to help me learn the theory behind them. Additionally, I have implemented a convolutional layer to create a **convolutional neural network**. I consulted various research papers in order to learn and implement optimizations to make the neural net perform better. I've included comments in the code explaining where certain math comes from, and why it works. 
 
 ## Optimizations
 
@@ -25,7 +25,7 @@ self.biases = np.zeros((neurons, 1))
 
 Where _v<sub>t</sub>_ is the how much we shift the weights in the _t_'th iteration, _⍬<sub>t</sub>_ is the weights, _∇ f_ is the gradient of the weights, _µ_ is the momentum coefficient, and _ε_ is the learning rate. 
 
-I implemented this in linear.py by storing a momentum attribute for weights and biases, and updating it through every iteration, and using the stored attribute to update the weights and biases. I used 0.9 as the momentum coefficient.
+I implemented this in linear.py by storing a momentum attribute for weights and biases, and updating it through every iteration, and using the stored attribute to update the weights and biases. I used 0.9 as the momentum coefficient. Similarly, momentum is implemented in convolutional.py for filters and biases.
 
 ```
 self.weights_momentum = 0.9 * self.weights_momentum - learning_rate * weights_gradient

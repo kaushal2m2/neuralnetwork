@@ -15,7 +15,7 @@ class NeuralNetwork:
         # if batch_size is None, then use all the data
         if batch_size is None:
             batch_size = len(x_train)
-        print(batch_size)
+        
         for epoch in range(epochs):
             # get a random batch of data
             batch_indices = [i for i in range(len(x_train))]
@@ -24,12 +24,8 @@ class NeuralNetwork:
             batch_indices = batch_indices[idx:idx+batch_size]
             x_batch = [x_train[i] for i in batch_indices]
             y_batch = [y_train[i] for i in batch_indices]
-           
-            x_batch = np.reshape(x_batch, (batch_size, 2, 1))
-            y_batch = np.reshape(y_batch, (batch_size, 1, 1))
             
             # train on this batch
-            error = 0
             for x,y in zip(x_batch, y_batch):
                 # forward pass
                 output = self.predict(x)
@@ -41,5 +37,8 @@ class NeuralNetwork:
             
             # print progress
             predictions = [self.predict(x) for x in x_batch]
-            loss = loss_fn(y_batch, predictions)
+            loss = 0
+            for i in range(batch_size):
+                loss += loss_fn(y_batch[i], predictions[i])
+            loss = loss / batch_size
             print("Epoch %d/%d loss: %.3f" % (epoch+1, epochs, loss))

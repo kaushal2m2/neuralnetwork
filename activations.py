@@ -23,3 +23,8 @@ class ReLU(Activation):
         activation_derivative = lambda x: np.where(x > 0, 1, 0)
         super().__init__(activation, activation_derivative)
 
+class Sigmoid(Activation):
+    def __init__(self):
+        sigmoid = lambda x : 1 / (1 + np.exp(-x))
+        sigmoid_prime = lambda x : sigmoid(x) * (1 - sigmoid(x))
+        super().__init__(sigmoid, sigmoid_prime)
