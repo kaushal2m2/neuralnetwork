@@ -1,4 +1,5 @@
 from layer import Layer
+from initiliazations import he, xavier
 import numpy as np
 
 class Linear(Layer):
@@ -13,7 +14,9 @@ class Linear(Layer):
         # instead, implement He initialization [1] for weights and biases, since we are using relu
         # He initialization: initialize weights with mean 0 and variance sqrt(2/n), where n is the number of inputs
         # biases = 0
-        self.weights = np.random.randn(neurons, input_size) * np.sqrt(2 / input_size)
+        self.weights = he((neurons, input_size), input_size)
+        # if we weren't using relu, we would use xavier initialization [2]
+        # self.weights = xavier((neurons, input_size), input_size, neurons)
         self.biases = np.zeros((neurons, 1))
         self.weights_momentum = np.zeros(self.weights.shape)
         self.biases_momentum = np.zeros(self.biases.shape)
@@ -43,7 +46,7 @@ class Linear(Layer):
         # this can be written as a matrix of wij * dL/dyj (note wij, so its transpose)
         input_gradient = self.weights.T @ output_gradient
 
-        # we are using momentum [2], with coeff = 0.9, as an additional optimization
+        # we are using momentum [3], with coeff = 0.9, as an additional optimization
         self.weights_momentum = 0.9 * self.weights_momentum - learning_rate * weights_gradient
         self.biases_momentum = 0.9 * self.biases_momentum - learning_rate * output_gradient
 
