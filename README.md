@@ -4,6 +4,8 @@
 
 This repo is my implementation of a basic **feedforward neural network with stochastic gradient descent** and a **convolutional neural network**, to help me learn the theory behind them. I consulted various research papers in order to learn and implement optimizations to make the neural net perform better. I've included comments in the code explaining where certain math comes from, and why it works. 
 
+This model was able to achieve **92%** accuracy (9125/10000) on the known MNIST dataset using a convolutional neural network.
+
 ## Optimizations
 
 ### He initialization function

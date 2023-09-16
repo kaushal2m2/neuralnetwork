@@ -1,5 +1,5 @@
 from layer import Layer
-from initiliazations import he, xavier
+from initializations import he, xavier
 import numpy as np
 
 class Linear(Layer):
